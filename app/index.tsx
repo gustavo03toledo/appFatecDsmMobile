@@ -24,13 +24,14 @@ const { width, height } = Dimensions.get('window');
 const isSmallScreen = width < 375;
 const isTablet = width > 768;
 
-// Calculate proper spacing
-const containerPadding = isSmallScreen ? 12 : 16; // Reduced for small screens
-const buttonSpacing = isSmallScreen ? 10 : 12; // gap between buttons
+// Calculate proper spacing - focado em mobile
+const containerPadding = isSmallScreen ? 16 : 20;
+const buttonSpacing = isSmallScreen ? 12 : 16; // espaçamento entre botões
 const availableWidth = width - (containerPadding * 2);
+// Garantir que caibam exatamente 2 botões por linha em mobile
 const buttonWidth = isTablet 
   ? (availableWidth - (buttonSpacing * 2)) / 3 // 3 columns for tablet
-  : (availableWidth - buttonSpacing) / 2; // 2 columns for mobile
+  : Math.floor((availableWidth - buttonSpacing) / 2); // 2 columns for mobile, arredondado para baixo
 
 interface CategoryButtonProps {
   title: string;
@@ -38,6 +39,7 @@ interface CategoryButtonProps {
   href: string;
   gradient: readonly [string, string];
   description: string;
+  index: number;
 }
 
 const CategoryButton: React.FC<CategoryButtonProps> = ({ 
@@ -45,15 +47,19 @@ const CategoryButton: React.FC<CategoryButtonProps> = ({
   icon, 
   href, 
   gradient, 
-  description 
+  description,
+  index
 }) => {
   const buttonStyle = useMemo(() => {
     const baseStyle = styles.categoryButton;
+    const isEven = index % 2 === 0;
     const style: any = {
       height: baseStyle.height,
       marginBottom: baseStyle.marginBottom,
+      marginRight: isTablet ? (index % 3 !== 2 ? buttonSpacing : 0) : (isEven ? buttonSpacing : 0),
       borderRadius: baseStyle.borderRadius,
-      width: Math.round(buttonWidth),
+      width: buttonWidth,
+      maxWidth: buttonWidth, // Garantir que não ultrapasse
     };
     
     // Only add platform-specific shadow properties if they exist
@@ -69,7 +75,7 @@ const CategoryButton: React.FC<CategoryButtonProps> = ({
     }
     
     return style;
-  }, []);
+  }, [index]);
 
   return (
     <Link href={href} asChild>
@@ -145,7 +151,7 @@ export default function Index() {
           <View style={styles.header}>
             <View style={styles.welcomeContainer}>
               <Text style={styles.welcomeText}>Bem-vindo ao</Text>
-              <Text style={styles.appTitle}>Lab Mobile</Text>
+              <Text style={styles.appTitle}>Info FATEC</Text>
               <Text style={styles.subtitle}>Sua plataforma completa de desenvolvimento</Text>
             </View>
           </View>
@@ -163,6 +169,7 @@ export default function Index() {
                   href={category.href}
                   gradient={category.gradient}
                   description={category.description}
+                  index={index}
                 />
               ))}
             </View>
@@ -235,50 +242,51 @@ const styles = StyleSheet.create({
   gridContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: buttonSpacing,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    width: '100%',
   },
   categoryButton: {
-    height: isSmallScreen ? 150 : isTablet ? 180 : 160,
-    marginBottom: 0,
-    borderRadius: isSmallScreen ? 16 : 20,
-    elevation: Platform.OS === 'android' ? 5 : 0,
+    height: isSmallScreen ? 140 : isTablet ? 180 : 160,
+    marginBottom: isSmallScreen ? 12 : 16,
+    borderRadius: isSmallScreen ? 14 : 18,
+    elevation: Platform.OS === 'android' ? 4 : 0,
     shadowColor: Platform.OS === 'ios' ? '#000' : undefined,
-    shadowOffset: Platform.OS === 'ios' ? { width: 0, height: 3 } : undefined,
-    shadowOpacity: Platform.OS === 'ios' ? 0.2 : undefined,
-    shadowRadius: Platform.OS === 'ios' ? 6 : undefined,
+    shadowOffset: Platform.OS === 'ios' ? { width: 0, height: 2 } : undefined,
+    shadowOpacity: Platform.OS === 'ios' ? 0.15 : undefined,
+    shadowRadius: Platform.OS === 'ios' ? 4 : undefined,
   },
   categoryGradient: {
-    padding: isSmallScreen ? 16 : 20,
-    borderRadius: isSmallScreen ? 16 : 20,
+    padding: isSmallScreen ? 14 : 18,
+    borderRadius: isSmallScreen ? 14 : 18,
     alignItems: 'center',
-    minHeight: '100%',
+    height: '100%',
     justifyContent: 'center',
+    flex: 1,
   },
   iconContainer: {
-    width: isSmallScreen ? 52 : isTablet ? 68 : 60,
-    height: isSmallScreen ? 52 : isTablet ? 68 : 60,
-    borderRadius: isSmallScreen ? 26 : isTablet ? 34 : 30,
+    width: isSmallScreen ? 48 : isTablet ? 68 : 56,
+    height: isSmallScreen ? 48 : isTablet ? 68 : 56,
+    borderRadius: isSmallScreen ? 24 : isTablet ? 34 : 28,
     backgroundColor: 'rgba(255, 255, 255, 0.25)',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: isSmallScreen ? 10 : 14,
+    marginBottom: isSmallScreen ? 8 : 12,
   },
   categoryTitle: {
-    fontSize: isSmallScreen ? 14 : isTablet ? 18 : 16,
+    fontSize: isSmallScreen ? 15 : isTablet ? 18 : 16,
     fontWeight: 'bold',
     color: '#FFFFFF',
-    marginBottom: isSmallScreen ? 6 : 8,
+    marginBottom: isSmallScreen ? 4 : 6,
     textAlign: 'center',
   },
   categoryDescription: {
-    fontSize: isSmallScreen ? 11 : isTablet ? 12 : 11.5,
+    fontSize: isSmallScreen ? 11.5 : isTablet ? 13 : 12,
     color: 'rgba(255, 255, 255, 0.85)',
     textAlign: 'center',
-    lineHeight: isSmallScreen ? 15 : 17,
+    lineHeight: isSmallScreen ? 14 : 16,
     fontWeight: '400',
-    paddingHorizontal: isSmallScreen ? 4 : 6,
+    paddingHorizontal: isSmallScreen ? 2 : 4,
   },
   footer: {
     alignItems: 'center',

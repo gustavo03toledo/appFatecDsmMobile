@@ -25,11 +25,10 @@ const isTablet = width > 768;
 
 // Calculate proper spacing
 const containerPadding = isSmallScreen ? 12 : 16; // Reduced for small screens
-const buttonSpacing = isSmallScreen ? 10 : 12; // gap between buttons
+const buttonSpacing = isSmallScreen ? 14 : isTablet ? 20 : 16; // gap between buttons
 const availableWidth = width - (containerPadding * 2);
-const buttonWidth = isTablet 
-  ? (availableWidth - (buttonSpacing * 2)) / 3 // 3 columns for tablet
-  : (availableWidth - buttonSpacing) / 2; // 2 columns for mobile
+// Botões ocupam toda a largura disponível (um abaixo do outro)
+const buttonWidth = availableWidth;
 
 interface CategoryButtonProps {
   title: string;
@@ -144,8 +143,8 @@ export default function Index() {
           <View style={styles.header}>
             <View style={styles.welcomeContainer}>
               <Text style={styles.welcomeText}>Bem-vindo ao</Text>
-              <Text style={styles.appTitle}>Lab Mobile</Text>
-              <Text style={styles.subtitle}>Sua plataforma completa de desenvolvimento</Text>
+              <Text style={styles.appTitle}>Info FATEC Cotia.</Text>
+              <Text style={styles.subtitle}>Desenvolvido para Fatecanos e futuros Fatecanos</Text>
             </View>
           </View>
 
@@ -196,9 +195,9 @@ const styles = StyleSheet.create({
   },
   header: {
     alignItems: 'center',
-    marginBottom: isSmallScreen ? 24 : 32,
+    marginBottom: isSmallScreen ? 28 : isTablet ? 40 : 36,
     paddingHorizontal: isSmallScreen ? 12 : 16,
-    marginTop: isSmallScreen ? 4 : 8,
+    marginTop: isSmallScreen ? 8 : 12,
   },
   welcomeContainer: {
     alignItems: 'center',
@@ -226,25 +225,23 @@ const styles = StyleSheet.create({
   },
   categoriesContainer: {
     paddingHorizontal: isSmallScreen ? 12 : 16,
-    marginBottom: isSmallScreen ? 20 : 28,
+    marginBottom: isSmallScreen ? 24 : isTablet ? 36 : 32,
   },
   sectionTitle: {
     fontSize: isSmallScreen ? 20 : isTablet ? 28 : 24,
     fontWeight: 'bold',
     color: '#FFFFFF',
-    marginBottom: isSmallScreen ? 18 : 24,
+    marginBottom: isSmallScreen ? 20 : isTablet ? 28 : 24,
     textAlign: 'center',
   },
   gridContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    gap: buttonSpacing,
-    alignItems: 'center',
+    flexDirection: 'column',
+    alignItems: 'stretch',
     gap: buttonSpacing,
   },
   categoryButton: {
-    height: isSmallScreen ? 150 : isTablet ? 180 : 160,
+    width: '100%',
+    height: isSmallScreen ? 140 : isTablet ? 160 : 150,
     marginBottom: 0,
     borderRadius: isSmallScreen ? 16 : 20,
     elevation: Platform.OS === 'android' ? 5 : 0,
@@ -287,7 +284,7 @@ const styles = StyleSheet.create({
   footer: {
     alignItems: 'center',
     paddingHorizontal: isSmallScreen ? 12 : 16,
-    marginTop: isSmallScreen ? 16 : 24,
+    marginTop: isSmallScreen ? 20 : isTablet ? 32 : 28,
     paddingBottom: Platform.OS === 'ios' ? 16 : 12,
   },
   footerText: {

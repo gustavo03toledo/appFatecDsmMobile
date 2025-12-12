@@ -16,7 +16,63 @@ export default function RootLayout() {
         <Stack.Screen 
           name="desenvolvedor" 
           options={{
-            title: 'Sobre o Desenvolvedor',
+            title: 'Gustavo Toledo',
+            headerShown: true,
+            headerStyle: {
+              backgroundColor: '#0f0f23',
+            },
+            headerTintColor: '#FFFFFF',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          }}
+        />
+        <Stack.Screen 
+          name="guilherme" 
+          options={{
+            title: 'Guilherme Lopretti',
+            headerShown: true,
+            headerStyle: {
+              backgroundColor: '#0f0f23',
+            },
+            headerTintColor: '#FFFFFF',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          }}
+        />
+        <Stack.Screen 
+          name="julia" 
+          options={{
+            title: 'Julia Martins',
+            headerShown: true,
+            headerStyle: {
+              backgroundColor: '#0f0f23',
+            },
+            headerTintColor: '#FFFFFF',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          }}
+        />
+        <Stack.Screen 
+          name="luiz" 
+          options={{
+            title: 'Luiz Pimentel',
+            headerShown: true,
+            headerStyle: {
+              backgroundColor: '#0f0f23',
+            },
+            headerTintColor: '#FFFFFF',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          }}
+        />
+        <Stack.Screen 
+          name="ana" 
+          options={{
+            title: 'Ana Carolina',
             headerShown: true,
             headerStyle: {
               backgroundColor: '#0f0f23',

@@ -18,6 +18,7 @@ import {
   Ionicons,
   FontAwesome5 
 } from '@expo/vector-icons';
+import { Footer } from './components/Footer';
 
 const { width, height } = Dimensions.get('window');
 const isSmallScreen = width < 375;
@@ -167,11 +168,7 @@ export default function Index() {
           </View>
 
           {/* Footer */}
-          <View style={styles.footer}>
-            <Text style={styles.footerText}>
-              Desenvolvido com ❤️ para a comunidade
-            </Text>
-          </View>
+          <Footer />
         </ScrollView>
       </LinearGradient>
     </SafeAreaView>
@@ -280,17 +277,5 @@ const styles = StyleSheet.create({
     lineHeight: isSmallScreen ? 15 : 17,
     fontWeight: '400',
     paddingHorizontal: isSmallScreen ? 4 : 6,
-  },
-  footer: {
-    alignItems: 'center',
-    paddingHorizontal: isSmallScreen ? 12 : 16,
-    marginTop: isSmallScreen ? 20 : isTablet ? 32 : 28,
-    paddingBottom: Platform.OS === 'ios' ? 16 : 12,
-  },
-  footerText: {
-    fontSize: isSmallScreen ? 12 : 14,
-    color: '#a0a0a0',
-    textAlign: 'center',
-    fontWeight: '400',
   },
 });
